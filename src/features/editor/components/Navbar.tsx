@@ -9,11 +9,19 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import { Logo } from '@/features/editor/components/Logo';
+import { ActiveTool } from '@/features/editor/types';
+import { cn } from '@/lib/utils';
 import { ChevronDown, Download, MousePointerClick, Redo2, Undo2 } from 'lucide-react';
 import { BsCloudCheck } from 'react-icons/bs';
 import { CiFileOn } from 'react-icons/ci';
 
-export const Navbar = () => {
+interface Props {
+	activeTool: ActiveTool;
+	onChangeActiveTool: (activeTool: ActiveTool) => void;
+}
+
+export const Navbar = (props: Props) => {
+	const {activeTool, onChangeActiveTool} = props
 	return (
 		<nav className={'w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]'}>
 			<Logo/>
@@ -37,7 +45,12 @@ export const Navbar = () => {
 				</DropdownMenu>
 				<Separator orientation={'vertical'} className={'mx-2'}/>
 				<Hint label={'Select'}>
-					<Button size={'icon'} variant={'ghost'}>
+					<Button
+						size={'icon'}
+						variant={'ghost'}
+						className={cn(activeTool === 'select' && 'bg-gray-100')}
+						onClick={() => onChangeActiveTool('select')}
+					>
 						<MousePointerClick className={'size-4'}/>
 					</Button>
 				</Hint>

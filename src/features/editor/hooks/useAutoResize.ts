@@ -1,3 +1,4 @@
+import { WORKSPACE_NAME } from '@/features/editor/types';
 import { fabric } from 'fabric';
 import { useCallback, useEffect } from 'react';
 
@@ -21,7 +22,7 @@ export const useAutoResize = (props: AutoResizeProps) => {
 		const center = canvas.getCenter();
 
 		const zoomRatio = 0.85;
-		const localWorkspace = canvas.getObjects().find(obj => obj.name === 'container');
+		const localWorkspace = canvas.getObjects().find(obj => obj.name === WORKSPACE_NAME);
 
 		//@ts-ignore
 		const scale = fabric.util.findScaleToFit(localWorkspace, {width, height});
