@@ -124,5 +124,7 @@ export type Editor = {
 	getStrokeWidth: () => number
 	getStrokeDashArray: () => number[]
 	getRadius: () => number
+	bringForward: () => void
+	sendBackwards: () => void
 	selectedObjects: fabric.Object[]
 }

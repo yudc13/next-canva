@@ -39,8 +39,8 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 		setStrokeWidth,
 		setStrokeDashArray,
 		setRadius,
-		selectedObjects
-	} = props
+		selectedObjects,
+	} = props;
 	const getWorkspace = () => canvas.getObjects().find((object) => object.name === WORKSPACE_NAME);
 	const center = (object: fabric.Object) => {
 		const workspace = getWorkspace();
@@ -57,47 +57,47 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 		canvas.setActiveObject(object);
 	};
 	return {
-		changeFillColor: (color  ) => {
-			setFillColor(color)
+		changeFillColor: (color) => {
+			setFillColor(color);
 			canvas.getActiveObjects().forEach((object) => {
-				object.set({ fill: color })
-			})
-			canvas.renderAll()
+				object.set({fill: color});
+			});
+			canvas.renderAll();
 		},
-		changeStrokeColor: (color  ) => {
-			setStrokeColor(color)
+		changeStrokeColor: (color) => {
+			setStrokeColor(color);
 			canvas.getActiveObjects().forEach((object) => {
 				// 文本类型没有stroke
 				if (isTextType(object.type)) {
-					object.set({ fill: color })
+					object.set({fill: color});
 				} else {
-					object.set({ stroke: color })
+					object.set({stroke: color});
 				}
-			})
-			canvas.renderAll()
+			});
+			canvas.renderAll();
 		},
-		changeStrokeWidth: (width  ) => {
-			setStrokeWidth(width)
+		changeStrokeWidth: (width) => {
+			setStrokeWidth(width);
 			canvas.getActiveObjects().forEach((object) => {
-				object.set({ strokeWidth: width })
-			})
-			canvas.renderAll()
+				object.set({strokeWidth: width});
+			});
+			canvas.renderAll();
 		},
 		changeStrokeDashArray: (dashArray) => {
-			setStrokeDashArray(dashArray)
+			setStrokeDashArray(dashArray);
 			canvas.getActiveObjects().forEach((object) => {
-				object.set({ strokeDashArray: dashArray })
-			})
-			canvas.renderAll()
+				object.set({strokeDashArray: dashArray});
+			});
+			canvas.renderAll();
 		},
 		changeRadius: (radius) => {
-			setRadius(radius)
+			setRadius(radius);
 			canvas.getActiveObjects().forEach((object) => {
 				if (object instanceof fabric.Rect) {
-					object.set({ rx: radius, ry: radius })
+					object.set({rx: radius, ry: radius});
 				}
-			})
-			canvas.renderAll()
+			});
+			canvas.renderAll();
 		},
 		// 圆
 		addCircle: () => {
@@ -151,9 +151,9 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 		addInverseTriangle: () => {
 			const object = new fabric.Polygon(
 				[
-					{ x: 0, y: 0 },
-					{ x: WIDTH, y: 0 },
-					{ x: WIDTH / 2, y: HEIGHT },
+					{x: 0, y: 0},
+					{x: WIDTH, y: 0},
+					{x: WIDTH / 2, y: HEIGHT},
 				],
 				{
 					...TRIANGLE_OPTION,
@@ -168,10 +168,10 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 		addDiamond: () => {
 			const object = new fabric.Polygon(
 				[
-					{ x: 0, y: HEIGHT / 2 },
-					{ x: WIDTH / 2, y: 0 },
-					{ x: WIDTH, y: HEIGHT / 2 },
-					{ x: WIDTH / 2, y: HEIGHT },
+					{x: 0, y: HEIGHT / 2},
+					{x: WIDTH / 2, y: 0},
+					{x: WIDTH, y: HEIGHT / 2},
+					{x: WIDTH / 2, y: HEIGHT},
 				],
 				{
 					...DIAMOND_OPTION,
@@ -185,58 +185,72 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 		getFillColor: () => {
 			const selectedObject = canvas.getActiveObjects()[0];
 			if (!selectedObject) {
-				return fillColor
+				return fillColor;
 			}
 			const value = selectedObject.get('fill') || fillColor;
-			return value as string
+			return value as string;
 		},
 		getStrokeColor: () => {
 			const selectedObject = canvas.getActiveObjects()[0];
 			if (!selectedObject) {
-				return strokeColor
+				return strokeColor;
 			}
 			const value = selectedObject.get('stroke') || strokeColor;
-			return value as string
+			return value as string;
 		},
 		getStrokeWidth: () => {
 			const selectedObject = canvas.getActiveObjects()[0];
 			if (!selectedObject) {
-				return strokeWidth
+				return strokeWidth;
 			}
-			return selectedObject.get('strokeWidth') || 0
+			return selectedObject.get('strokeWidth') || 0;
 		},
 		getStrokeDashArray: () => {
 			const selectedObject = canvas.getActiveObjects()[0];
 			if (!selectedObject) {
-				return strokeDashArray
+				return strokeDashArray;
 			}
-			return selectedObject.get('strokeDashArray') || strokeDashArray
+			return selectedObject.get('strokeDashArray') || strokeDashArray;
 		},
 		getRadius: () => {
 			const selectedObject = canvas.getActiveObjects()[0];
 			if (selectedObject instanceof fabric.Rect) {
-				return selectedObject.get('rx') || radius
+				return selectedObject.get('rx') || radius;
 			}
-			return radius
+			return radius;
+		},
+		bringForward: () => {
+			const objects = canvas.getActiveObjects();
+			objects.forEach((object) => {
+				object.bringForward();
+			});
+			canvas.renderAll();
+		},
+		sendBackwards: () => {
+			const objects = canvas.getActiveObjects();
+			objects.forEach((object) => {
+				object.sendBackwards();
+			});
+			canvas.renderAll();
 		},
 		canvas,
-		selectedObjects
+		selectedObjects,
 	};
 };
 
-export const useEditor = ({ clearDependenciesTools }: UseEditorProps) => {
+export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 
 	const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
 	const [container, setContainer] = useState<HTMLDivElement | null>(null);
-	const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([])
-	const [fillColor, setFillColor] = useState(FILL_COLOR)
-	const [strokeColor, setStrokeColor] = useState(STROKE_COLOR)
-	const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH)
-	const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY)
-	const [radius, setRadius] = useState(RADIUS)
+	const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
+	const [fillColor, setFillColor] = useState(FILL_COLOR);
+	const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
+	const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
+	const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
+	const [radius, setRadius] = useState(RADIUS);
 
 	useAutoResize({canvas, container});
-	useCanvasEvents({ canvas, setSelectedObjects, clearDependenciesTools })
+	useCanvasEvents({canvas, setSelectedObjects, clearDependenciesTools});
 
 	const editor = useMemo(() => {
 		if (canvas) {
@@ -252,7 +266,7 @@ export const useEditor = ({ clearDependenciesTools }: UseEditorProps) => {
 				setStrokeWidth,
 				setStrokeDashArray,
 				setRadius,
-				selectedObjects
+				selectedObjects,
 			});
 		}
 		return undefined;
