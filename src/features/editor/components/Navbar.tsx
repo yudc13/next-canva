@@ -29,7 +29,7 @@ export const Navbar = (props: Props) => {
 				<DropdownMenu modal={false}>
 					<DropdownMenuTrigger asChild>
 						<Button size={'sm'} variant={'ghost'}>
-							File
+							文件
 							<ChevronDown className={'size-4 ml-2'}/>
 						</Button>
 					</DropdownMenuTrigger>
@@ -37,14 +37,14 @@ export const Navbar = (props: Props) => {
 						<DropdownMenuItem className={'flex items-center gap-x-2'}>
 							<CiFileOn className={'size-8'}/>
 							<div>
-								<p>Open</p>
-								<p className={'text-xs text-muted-foreground'}>Open a JSON file</p>
+								<p>选择</p>
+								<p className={'text-xs text-muted-foreground'}>选择一个JSON文件</p>
 							</div>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 				<Separator orientation={'vertical'} className={'mx-2'}/>
-				<Hint label={'Select'}>
+				<Hint label={'选择'}>
 					<Button
 						size={'icon'}
 						variant={'ghost'}
@@ -54,12 +54,12 @@ export const Navbar = (props: Props) => {
 						<MousePointerClick className={'size-4'}/>
 					</Button>
 				</Hint>
-				<Hint label={'Undo'}>
+				<Hint label={'撤销'}>
 					<Button size={'icon'} variant={'ghost'}>
 						<Undo2 className={'size-4'}/>
 					</Button>
 				</Hint>
-				<Hint label={'Redo'}>
+				<Hint label={'重做'}>
 					<Button size={'icon'} variant={'ghost'}>
 						<Redo2 className={'size-4'}/>
 					</Button>
@@ -67,13 +67,13 @@ export const Navbar = (props: Props) => {
 				<Separator orientation={'vertical'} className={'mx-2'}/>
 				<div className={'flex items-center gap-x-2'}>
 					<BsCloudCheck className={'size-[20px] text-muted-foreground'} />
-					<div className={'text-xs text-muted-foreground'}>Saved</div>
+					<div className={'text-xs text-muted-foreground'}>保存</div>
 				</div>
 				<div className={'flex items-center gap-x-4 ml-auto'}>
 					<DropdownMenu modal={false}>
 						<DropdownMenuTrigger asChild>
 							<Button variant={'ghost'} size={'sm'}>
-								Export
+								导出
 								<Download className={'size-4 ml-4'} />
 							</Button>
 						</DropdownMenuTrigger>

@@ -4,9 +4,10 @@ import { useEffect } from 'react';
 interface Props {
 	canvas: fabric.Canvas | null
 	setSelectedObjects: (objects: fabric.Object[]) => void
+	clearDependenciesTools?: () => void
 }
 
-export const useCanvasEvents = ({canvas, setSelectedObjects}: Props) => {
+export const useCanvasEvents = ({canvas, setSelectedObjects, clearDependenciesTools}: Props) => {
 	useEffect(() => {
 		if (canvas) {
 			canvas.on('selection:created', (e) => {
@@ -17,6 +18,8 @@ export const useCanvasEvents = ({canvas, setSelectedObjects}: Props) => {
 			})
 			canvas.on('selection:cleared', () => {
 				setSelectedObjects([])
+				// 清除选中的时候, 关闭指定的 Sidebar
+				clearDependenciesTools?.()
 			})
 		}
 		return () => {
@@ -26,5 +29,5 @@ export const useCanvasEvents = ({canvas, setSelectedObjects}: Props) => {
 				canvas.off('selection:cleared')
 			}
 		}
-	} ,[canvas])
+	} ,[canvas, clearDependenciesTools, setSelectedObjects])
 };

@@ -16,25 +16,25 @@ export const Sidebar = (props: Props) => {
 			<ul className={'flex flex-col'}>
 				<SidebarItem
 					icon={LayoutTemplate}
-					label={'Design'}
+					label={'模版'}
 					isActive={activeTool === 'templates'}
 					onClick={() => onChangeActiveTool('templates')}
 				/>
 				<SidebarItem
 					icon={ImageIcon}
-					label={'Image'}
+					label={'图片'}
 					isActive={activeTool === 'images'}
 					onClick={() => onChangeActiveTool('images')}
 				/>
 				<SidebarItem
 					icon={Type}
-					label={'Text'}
+					label={'文字'}
 					isActive={activeTool === 'text'}
 					onClick={() => onChangeActiveTool('text')}
 				/>
 				<SidebarItem
 					icon={Shapes}
-					label={'Shapes'}
+					label={'形状'}
 					isActive={activeTool === 'shapes'}
 					onClick={() => onChangeActiveTool('shapes')}
 				/>
@@ -46,7 +46,7 @@ export const Sidebar = (props: Props) => {
 				/>
 				<SidebarItem
 					icon={Settings}
-					label={'Settings'}
+					label={'设置'}
 					isActive={activeTool === 'settings'}
 					onClick={() => onChangeActiveTool('settings')}
 				/>

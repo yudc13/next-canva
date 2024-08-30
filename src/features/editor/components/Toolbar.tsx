@@ -1,10 +1,10 @@
 'use client';
 
+import { RxBorderWidth } from 'react-icons/rx';
 import { Hint } from '@/components/Hint';
 import { Button } from '@/components/ui/button';
-import { ActiveTool, Editor } from '@/features/editor/types';
+import { ActiveTool, Editor, FILL_COLOR, STROKE_COLOR, STROKE_WIDTH } from '@/features/editor/types';
 import { cn } from '@/lib/utils';
-import { fabric } from 'fabric';
 
 interface Props {
 	editor: Editor | undefined;
@@ -15,7 +15,9 @@ interface Props {
 export const Toolbar = (props: Props) => {
 	const {editor, activeTool, onChangeActiveTool} = props;
 
-	const fileColor = editor?.fillColor
+	const fileColor = editor?.getFillColor() || FILL_COLOR
+	const strokeColor = editor?.getStrokeColor() || STROKE_COLOR
+	const strokeWidth = editor?.getStrokeWidth() || STROKE_WIDTH
 
 	if (editor?.selectedObjects.length === 0) {
 		return <div className={'shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2'} />
@@ -23,14 +25,32 @@ export const Toolbar = (props: Props) => {
 
 	return (
 		<div className={'shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2'}>
-			<div className={'flex items-center justify-center h-full'}>
-				<Hint label={'Color'} side={'bottom'} sideOffset={5}>
+			<div className={'flex items-center justify-center h-full gap-2'}>
+				<Hint label={'颜色'} side={'bottom'} sideOffset={5}>
 					<Button
 						variant={'ghost'} size={'icon'}
 						className={cn(activeTool === 'fill' && 'bg-gray-100')}
 						onClick={() => onChangeActiveTool('fill')}
 					>
 						<div className={'rounded-sm size-4 border'} style={{backgroundColor: fileColor}}/>
+					</Button>
+				</Hint>
+				<Hint label={'边框颜色'} side={'bottom'} sideOffset={5}>
+					<Button
+						variant={'ghost'} size={'icon'}
+						className={cn(activeTool === 'stroke-color' && 'bg-gray-100')}
+						onClick={() => onChangeActiveTool('stroke-color')}
+					>
+						<div className={'rounded-sm size-4 border-2 bg-white'} style={{borderColor: strokeColor}}/>
+					</Button>
+				</Hint>
+				<Hint label={'边框样式'} side={'bottom'} sideOffset={5}>
+					<Button
+						variant={'ghost'} size={'icon'}
+						className={cn(activeTool === 'stroke-width' && 'bg-gray-100')}
+						onClick={() => onChangeActiveTool('stroke-width')}
+					>
+						<RxBorderWidth className={'size-4'} />
 					</Button>
 				</Hint>
 			</div>

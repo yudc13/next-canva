@@ -1,5 +1,5 @@
 import { fabric } from 'fabric';
-import * as material from 'material-colors'
+import * as material from 'material-colors';
 
 export const WORKSPACE_NAME = 'container';
 
@@ -23,8 +23,8 @@ export const COLORS = [
 	material.deepOrange['500'],
 	material.brown['500'],
 	material.blueGrey['500'],
-	"transparent"
-]
+	'transparent',
+];
 
 export type ActiveTool =
 	| 'select'
@@ -43,9 +43,15 @@ export type ActiveTool =
 	| 'remove-bg'
 	| 'templates'
 
+export const SELECT_DEPENDENCIES_TOOLS = [
+	'fill', 'stroke-color', 'stroke-width',
+];
+
 export const FILL_COLOR = 'rgba(0, 0, 0, 1)';
 export const STROKE_COLOR = 'rgba(0, 0, 0, 1)';
 export const STROKE_WIDTH = 2;
+export const RADIUS = 10;
+export const STROKE_DASH_ARRAY = [];
 
 export const WIDTH = 100;
 export const HEIGHT = 100;
@@ -86,25 +92,37 @@ export type BuilderEditorProps = {
 	fillColor: string
 	strokeColor: string
 	strokeWidth: number
+	strokeDashArray: number[]
+	radius: number
 	selectedObjects: fabric.Object[]
 	setFillColor: (color: string) => void
 	setStrokeColor: (color: string) => void
 	setStrokeWidth: (width: number) => void
+	setStrokeDashArray: (dashArray: number[]) => void
+	setRadius: (radius: number) => void
+}
+
+export interface UseEditorProps {
+	clearDependenciesTools?: () => void
 }
 
 export type Editor = {
 	addCircle: () => void
 	addSoftRectangle: () => void
-	addRectangle: () => void
+	// addRectangle: () => void
 	addTriangle: () => void
 	addInverseTriangle: () => void
 	addDiamond: () => void
 	changeFillColor: (color: string) => void
 	changeStrokeColor: (color: string) => void
 	changeStrokeWidth: (width: number) => void
+	changeStrokeDashArray: (dashArray: number[]) => void
+	changeRadius: (radius: number) => void
 	canvas: fabric.Canvas,
-	fillColor: string
-	strokeColor: string
-	strokeWidth: number
+	getFillColor: () => string
+	getStrokeColor: () => string
+	getStrokeWidth: () => number
+	getStrokeDashArray: () => number[]
+	getRadius: () => number
 	selectedObjects: fabric.Object[]
 }
