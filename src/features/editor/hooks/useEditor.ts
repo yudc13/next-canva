@@ -6,7 +6,7 @@ import {
 	DIAMOND_OPTION,
 	Editor,
 	FILL_COLOR,
-	HEIGHT,
+	HEIGHT, OPACITY,
 	RADIUS,
 	RECTANGLE_OPTION,
 	STROKE_COLOR,
@@ -34,11 +34,13 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 		strokeWidth,
 		strokeDashArray,
 		radius,
+		opacity,
 		setFillColor,
 		setStrokeColor,
 		setStrokeWidth,
 		setStrokeDashArray,
 		setRadius,
+		setOpacity,
 		selectedObjects,
 	} = props;
 	const getWorkspace = () => canvas.getObjects().find((object) => object.name === WORKSPACE_NAME);
@@ -56,6 +58,7 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 		canvas.add(object);
 		canvas.setActiveObject(object);
 	};
+
 	return {
 		changeFillColor: (color) => {
 			setFillColor(color);
@@ -99,6 +102,13 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 			});
 			canvas.renderAll();
 		},
+		changeOpacity: (opacity) => {
+			setOpacity(opacity);
+			canvas.getActiveObjects().forEach((object) => {
+				object.set({opacity: opacity});
+			});
+			canvas.renderAll();
+		},
 		// 圆
 		addCircle: () => {
 			const object = new fabric.Circle({
@@ -107,6 +117,7 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 				stroke: strokeColor,
 				strokeWidth: strokeWidth,
 				strokeDashArray: strokeDashArray,
+				opacity: opacity,
 			});
 			addToCenter(object);
 		},
@@ -120,6 +131,7 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 				stroke: strokeColor,
 				strokeWidth: strokeWidth,
 				strokeDashArray: strokeDashArray,
+				opacity: opacity,
 			});
 			addToCenter(object);
 		},
@@ -144,6 +156,7 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 				stroke: strokeColor,
 				strokeWidth: strokeWidth,
 				strokeDashArray: strokeDashArray,
+				opacity: opacity,
 			});
 			addToCenter(object);
 		},
@@ -161,6 +174,7 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 					stroke: strokeColor,
 					strokeWidth: strokeWidth,
 					strokeDashArray: strokeDashArray,
+					opacity: opacity,
 				});
 			addToCenter(object);
 		},
@@ -179,6 +193,7 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 					stroke: strokeColor,
 					strokeWidth: strokeWidth,
 					strokeDashArray: strokeDashArray,
+					opacity: opacity,
 				});
 			addToCenter(object);
 		},
@@ -233,6 +248,15 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 			});
 			canvas.renderAll();
 		},
+		getOpacity: () => {
+			const selectedObject = canvas.getActiveObjects()[0];
+			if (!selectedObject) {
+				return opacity;
+			}
+			const selectedOpacity = selectedObject.get('opacity');
+
+			return selectedOpacity === undefined ? opacity : selectedOpacity;
+		},
 		canvas,
 		selectedObjects,
 	};
@@ -248,6 +272,7 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 	const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
 	const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 	const [radius, setRadius] = useState(RADIUS);
+	const [opacity, setOpacity] = useState(OPACITY);
 
 	useAutoResize({canvas, container});
 	useCanvasEvents({canvas, setSelectedObjects, clearDependenciesTools});
@@ -261,16 +286,18 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 				strokeWidth,
 				strokeDashArray,
 				radius,
+				opacity,
 				setFillColor,
 				setStrokeColor,
 				setStrokeWidth,
 				setStrokeDashArray,
 				setRadius,
+				setOpacity,
 				selectedObjects,
 			});
 		}
 		return undefined;
-	}, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, radius, selectedObjects]);
+	}, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, radius, opacity, selectedObjects]);
 
 	const init = useCallback((options: InitProps) => {
 		const {initialCanvas, initialContainer} = options;

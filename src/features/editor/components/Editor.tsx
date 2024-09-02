@@ -1,6 +1,7 @@
 'use client';
 
 
+import { OpacitySidebar } from '@/features/editor/components/OpacitySidebar';
 import { StrokeColorSidebar } from '@/features/editor/components/StrokeColorSidebar';
 import { StrokeWidthSidebar } from '@/features/editor/components/StrokeWidthSidebar';
 import { ActiveTool, SELECT_DEPENDENCIES_TOOLS } from '@/features/editor/types';
@@ -62,6 +63,7 @@ const Editor = () => {
 				<FillColorSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<StrokeColorSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<StrokeWidthSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
+				<OpacitySidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<main className={'flex-1 relative flex flex-col overflow-auto bg-gray-100'}>
 					<Toolbar
 						editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}

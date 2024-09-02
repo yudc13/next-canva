@@ -51,6 +51,7 @@ export const FILL_COLOR = 'rgba(0, 0, 0, 1)';
 export const STROKE_COLOR = 'rgba(0, 0, 0, 1)';
 export const STROKE_WIDTH = 2;
 export const RADIUS = 10;
+export const OPACITY = 1;
 export const STROKE_DASH_ARRAY = [];
 
 export const WIDTH = 100;
@@ -94,12 +95,14 @@ export type BuilderEditorProps = {
 	strokeWidth: number
 	strokeDashArray: number[]
 	radius: number
+	opacity: number
 	selectedObjects: fabric.Object[]
 	setFillColor: (color: string) => void
 	setStrokeColor: (color: string) => void
 	setStrokeWidth: (width: number) => void
 	setStrokeDashArray: (dashArray: number[]) => void
 	setRadius: (radius: number) => void
+	setOpacity: (opacity: number) => void
 }
 
 export interface UseEditorProps {
@@ -116,12 +119,14 @@ export type Editor = {
 	changeFillColor: (color: string) => void
 	changeStrokeColor: (color: string) => void
 	changeStrokeWidth: (width: number) => void
+	changeOpacity: (opacity: number) => void
 	changeStrokeDashArray: (dashArray: number[]) => void
 	changeRadius: (radius: number) => void
 	canvas: fabric.Canvas,
 	getFillColor: () => string
 	getStrokeColor: () => string
 	getStrokeWidth: () => number
+	getOpacity: () => number
 	getStrokeDashArray: () => number[]
 	getRadius: () => number
 	bringForward: () => void

@@ -1,6 +1,6 @@
 'use client';
 
-import { RxBorderWidth } from 'react-icons/rx';
+import { RxBorderWidth, RxTransparencyGrid } from 'react-icons/rx';
 import { Hint } from '@/components/Hint';
 import { Button } from '@/components/ui/button';
 import { ActiveTool, Editor, FILL_COLOR, STROKE_COLOR } from '@/features/editor/types';
@@ -19,7 +19,7 @@ export const Toolbar = (props: Props) => {
 	const fileColor = editor?.getFillColor() || FILL_COLOR;
 	const strokeColor = editor?.getStrokeColor() || STROKE_COLOR;
 
-	if (editor?.selectedObjects.length === 0) {
+	if (!editor || editor.selectedObjects.length === 0) {
 		return <div
 			className={'shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2'}/>;
 	}
@@ -64,6 +64,13 @@ export const Toolbar = (props: Props) => {
 						<BsLayerBackward className={'size-4'}/>
 					</Button>
 				</Hint>
+				<Hint label={'透明度'} side={'bottom'} sideOffset={5}>
+					<Button size={'icon'} variant={'ghost'} onClick={() => onChangeActiveTool('opacity')}>
+						<RxTransparencyGrid className={'size-4'}/>
+					</Button>
+				</Hint>
+
+
 			</div>
 		</div>
 	);
