@@ -13,7 +13,7 @@ interface Props {
 
 export const StrokeColorSidebar = (props: Props) => {
 	const {editor, activeTool, onChangeActiveTool} = props;
-	const strokeColor = editor?.getStrokeColor() || STROKE_COLOR
+	const strokeColor = editor?.getActiveStrokeColor() || STROKE_COLOR
 	const onStrokeColorChange = (color: string) => {
 		editor?.changeStrokeColor(color)
 	}

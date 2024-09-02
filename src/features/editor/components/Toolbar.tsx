@@ -16,8 +16,8 @@ interface Props {
 export const Toolbar = (props: Props) => {
 	const {editor, activeTool, onChangeActiveTool} = props;
 
-	const fileColor = editor?.getFillColor() || FILL_COLOR;
-	const strokeColor = editor?.getStrokeColor() || STROKE_COLOR;
+	const fileColor = editor?.getActiveFillColor() || FILL_COLOR;
+	const strokeColor = editor?.getActiveStrokeColor() || STROKE_COLOR;
 
 	if (!editor || editor.selectedObjects.length === 0) {
 		return <div
@@ -69,8 +69,6 @@ export const Toolbar = (props: Props) => {
 						<RxTransparencyGrid className={'size-4'}/>
 					</Button>
 				</Hint>
-
-
 			</div>
 		</div>
 	);

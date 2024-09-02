@@ -16,7 +16,7 @@ interface Props {
 
 export const OpacitySidebar = (props: Props) => {
 	const {editor, activeTool, onChangeActiveTool} = props;
-	const opacity = editor ? editor?.getOpacity() : OPACITY;
+	const opacity = editor ? editor?.getActiveOpacity() : OPACITY;
 	const onOpacityChange = (value: number) => {
 		editor?.changeOpacity(value);
 	};

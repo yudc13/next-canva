@@ -43,6 +43,32 @@ export type ActiveTool =
 	| 'remove-bg'
 	| 'templates'
 
+export const fonts = [
+	'Arial',
+	'Helvetica',
+	'Times New Roman',
+	'Georgia',
+	'Garamond',
+	'Courier New',
+	'Brush Script MT',
+	'Verdana',
+	'Tahoma',
+	'Palatino Linotype',
+	'Book Antiqua',
+	'Comic Sans MS',
+	'Courier New',
+	'Lucida Console',
+	'Lucida Sans Unicode',
+	'Arial Black',
+	'Impact',
+	'Trebuchet MS',
+	'Lucida Sans Typewriter',
+	'Lucida Fax',
+	'Century Gothic',
+	'Optima',
+	'Segoe UI',
+];
+
 export const SELECT_DEPENDENCIES_TOOLS = [
 	'fill', 'stroke-color', 'stroke-width',
 ];
@@ -110,26 +136,26 @@ export interface UseEditorProps {
 }
 
 export type Editor = {
+	canvas: fabric.Canvas,
+	selectedObjects: fabric.Object[]
+	addText: (text: string, options?: fabric.ITextOptions) => void
 	addCircle: () => void
 	addSoftRectangle: () => void
-	// addRectangle: () => void
 	addTriangle: () => void
 	addInverseTriangle: () => void
 	addDiamond: () => void
 	changeFillColor: (color: string) => void
+	getActiveFillColor: () => string
 	changeStrokeColor: (color: string) => void
+	getActiveStrokeColor: () => string
 	changeStrokeWidth: (width: number) => void
+	getActiveStrokeWidth: () => number
 	changeOpacity: (opacity: number) => void
+	getActiveOpacity: () => number
 	changeStrokeDashArray: (dashArray: number[]) => void
+	getActiveStrokeDashArray: () => number[]
 	changeRadius: (radius: number) => void
-	canvas: fabric.Canvas,
-	getFillColor: () => string
-	getStrokeColor: () => string
-	getStrokeWidth: () => number
-	getOpacity: () => number
-	getStrokeDashArray: () => number[]
-	getRadius: () => number
+	getActiveRadius: () => number
 	bringForward: () => void
 	sendBackwards: () => void
-	selectedObjects: fabric.Object[]
 }

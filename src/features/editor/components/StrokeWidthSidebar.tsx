@@ -6,10 +6,10 @@ import { Slider } from '@/components/ui/slider';
 import { ToolSidebar } from '@/features/editor/components/ToolSidebar';
 import { ToolSidebarClose } from '@/features/editor/components/ToolSidebarClose';
 import { ToolSidebarHeader } from '@/features/editor/components/ToolSidebarHeader';
-import { ActiveTool, Editor, RADIUS, STROKE_DASH_ARRAY, STROKE_WIDTH } from '@/features/editor/types';
+import { ActiveTool, Editor, RADIUS, STROKE_DASH_ARRAY } from '@/features/editor/types';
 import { cn } from '@/lib/utils';
 import { AiOutlineDash, AiOutlineSmallDash } from 'react-icons/ai';
-import { GoCircleSlash, GoDash } from 'react-icons/go';
+import { GoDash } from 'react-icons/go';
 
 interface Props {
 	editor: Editor | undefined;
@@ -27,9 +27,9 @@ const dashClassName = 'w-14 h-10 rounded-md border border-gray-300 bg-white hove
 
 export const StrokeWidthSidebar = (props: Props) => {
 	const {editor, activeTool, onChangeActiveTool} = props;
-	const strokeWidth = editor?.getStrokeWidth() || 0;
-	const strokeDashArray = editor?.getStrokeDashArray() || STROKE_DASH_ARRAY;
-	const radius = editor?.getRadius() || RADIUS;
+	const strokeWidth = editor?.getActiveStrokeWidth() || 0;
+	const strokeDashArray = editor?.getActiveStrokeDashArray() || STROKE_DASH_ARRAY;
+	const radius = editor?.getActiveRadius() || RADIUS;
 	const onStrokeWidthChange = (width: number) => {
 		editor?.changeStrokeWidth(width);
 	};

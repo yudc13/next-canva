@@ -67,6 +67,14 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 			});
 			canvas.renderAll();
 		},
+		getActiveFillColor: () => {
+			const selectedObject = canvas.getActiveObjects()[0];
+			if (!selectedObject) {
+				return fillColor;
+			}
+			const value = selectedObject.get('fill') || fillColor;
+			return value as string;
+		},
 		changeStrokeColor: (color) => {
 			setStrokeColor(color);
 			canvas.getActiveObjects().forEach((object) => {
@@ -79,6 +87,14 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 			});
 			canvas.renderAll();
 		},
+		getActiveStrokeColor: () => {
+			const selectedObject = canvas.getActiveObjects()[0];
+			if (!selectedObject) {
+				return strokeColor;
+			}
+			const value = selectedObject.get('stroke') || strokeColor;
+			return value as string;
+		},
 		changeStrokeWidth: (width) => {
 			setStrokeWidth(width);
 			canvas.getActiveObjects().forEach((object) => {
@@ -86,12 +102,26 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 			});
 			canvas.renderAll();
 		},
+		getActiveStrokeWidth: () => {
+			const selectedObject = canvas.getActiveObjects()[0];
+			if (!selectedObject) {
+				return strokeWidth;
+			}
+			return selectedObject.get('strokeWidth') || 0;
+		},
 		changeStrokeDashArray: (dashArray) => {
 			setStrokeDashArray(dashArray);
 			canvas.getActiveObjects().forEach((object) => {
 				object.set({strokeDashArray: dashArray});
 			});
 			canvas.renderAll();
+		},
+		getActiveStrokeDashArray: () => {
+			const selectedObject = canvas.getActiveObjects()[0];
+			if (!selectedObject) {
+				return strokeDashArray;
+			}
+			return selectedObject.get('strokeDashArray') || strokeDashArray;
 		},
 		changeRadius: (radius) => {
 			setRadius(radius);
@@ -102,12 +132,48 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 			});
 			canvas.renderAll();
 		},
+		getActiveRadius: () => {
+			const selectedObject = canvas.getActiveObjects()[0];
+			if (selectedObject instanceof fabric.Rect) {
+				return selectedObject.get('rx') || radius;
+			}
+			return radius;
+		},
 		changeOpacity: (opacity) => {
 			setOpacity(opacity);
 			canvas.getActiveObjects().forEach((object) => {
 				object.set({opacity: opacity});
 			});
 			canvas.renderAll();
+		},
+		getActiveOpacity: () => {
+			const selectedObject = canvas.getActiveObjects()[0];
+			if (!selectedObject) {
+				return opacity;
+			}
+			const selectedOpacity = selectedObject.get('opacity');
+
+			return selectedOpacity === undefined ? opacity : selectedOpacity;
+		},
+		bringForward: () => {
+			const objects = canvas.getActiveObjects();
+			objects.forEach((object) => {
+				object.bringForward();
+			});
+			canvas.renderAll();
+		},
+		sendBackwards: () => {
+			const objects = canvas.getActiveObjects();
+			objects.forEach((object) => {
+				object.sendBackwards();
+			});
+			canvas.renderAll();
+		},
+
+		// 文本
+		addText: (text, options) => {
+			const object = new fabric.Textbox(text, { ...options, editable: true, selectable: true })
+			addToCenter(object)
 		},
 		// 圆
 		addCircle: () => {
@@ -197,66 +263,6 @@ const buildEditor = (props: BuilderEditorProps): Editor => {
 				});
 			addToCenter(object);
 		},
-		getFillColor: () => {
-			const selectedObject = canvas.getActiveObjects()[0];
-			if (!selectedObject) {
-				return fillColor;
-			}
-			const value = selectedObject.get('fill') || fillColor;
-			return value as string;
-		},
-		getStrokeColor: () => {
-			const selectedObject = canvas.getActiveObjects()[0];
-			if (!selectedObject) {
-				return strokeColor;
-			}
-			const value = selectedObject.get('stroke') || strokeColor;
-			return value as string;
-		},
-		getStrokeWidth: () => {
-			const selectedObject = canvas.getActiveObjects()[0];
-			if (!selectedObject) {
-				return strokeWidth;
-			}
-			return selectedObject.get('strokeWidth') || 0;
-		},
-		getStrokeDashArray: () => {
-			const selectedObject = canvas.getActiveObjects()[0];
-			if (!selectedObject) {
-				return strokeDashArray;
-			}
-			return selectedObject.get('strokeDashArray') || strokeDashArray;
-		},
-		getRadius: () => {
-			const selectedObject = canvas.getActiveObjects()[0];
-			if (selectedObject instanceof fabric.Rect) {
-				return selectedObject.get('rx') || radius;
-			}
-			return radius;
-		},
-		bringForward: () => {
-			const objects = canvas.getActiveObjects();
-			objects.forEach((object) => {
-				object.bringForward();
-			});
-			canvas.renderAll();
-		},
-		sendBackwards: () => {
-			const objects = canvas.getActiveObjects();
-			objects.forEach((object) => {
-				object.sendBackwards();
-			});
-			canvas.renderAll();
-		},
-		getOpacity: () => {
-			const selectedObject = canvas.getActiveObjects()[0];
-			if (!selectedObject) {
-				return opacity;
-			}
-			const selectedOpacity = selectedObject.get('opacity');
-
-			return selectedOpacity === undefined ? opacity : selectedOpacity;
-		},
 		canvas,
 		selectedObjects,
 	};
@@ -310,6 +316,8 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 			transparentCorners: false,
 			borderOpacityWhenMoving: 1,
 			cornerStrokeColor: '#3b82f6',
+			hoverCursor: 'pointer',
+			moveCursor: 'move'
 		});
 
 		const initialWorkspace = new fabric.Rect({

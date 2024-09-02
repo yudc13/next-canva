@@ -13,7 +13,7 @@ interface Props {
 
 export const FillColorSidebar = (props: Props) => {
 	const {editor, activeTool, onChangeActiveTool} = props;
-	const fillColor = editor?.getFillColor() || FILL_COLOR
+	const fillColor = editor?.getActiveFillColor() || FILL_COLOR
 	const onFillColorChange = (color: string) => {
 		editor?.changeFillColor(color)
 	}
