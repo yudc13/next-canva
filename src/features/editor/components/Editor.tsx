@@ -1,6 +1,7 @@
 'use client';
 
 
+import { FontFamilySidebar } from '@/features/editor/components/FontFamilySidebar';
 import { OpacitySidebar } from '@/features/editor/components/OpacitySidebar';
 import { StrokeColorSidebar } from '@/features/editor/components/StrokeColorSidebar';
 import { StrokeWidthSidebar } from '@/features/editor/components/StrokeWidthSidebar';
@@ -68,6 +69,7 @@ const Editor = () => {
 				<StrokeColorSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<StrokeWidthSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<OpacitySidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
+				<FontFamilySidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<main className={'flex-1 relative flex flex-col overflow-auto bg-gray-100'}>
 					<Toolbar
 						editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}

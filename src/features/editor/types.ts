@@ -42,35 +42,33 @@ export type ActiveTool =
 	| 'ai'
 	| 'remove-bg'
 	| 'templates'
+	| 'fontFamily'
+	| 'fontWeight'
+	| 'underline'
 
 export const fonts = [
-	'Arial',
-	'Helvetica',
-	'Times New Roman',
-	'Georgia',
-	'Garamond',
-	'Courier New',
-	'Brush Script MT',
-	'Verdana',
-	'Tahoma',
-	'Palatino Linotype',
-	'Book Antiqua',
-	'Comic Sans MS',
-	'Courier New',
-	'Lucida Console',
-	'Lucida Sans Unicode',
-	'Arial Black',
-	'Impact',
-	'Trebuchet MS',
-	'Lucida Sans Typewriter',
-	'Lucida Fax',
-	'Century Gothic',
-	'Optima',
-	'Segoe UI',
+	"Arial",
+	"Arial Black",
+	"Verdana",
+	"Helvetica",
+	"Tahoma",
+	"Trebuchet MS",
+	"Times New Roman",
+	"Georgia",
+	"Garamond",
+	"Courier New",
+	"Brush Script MT",
+	"Palatino",
+	"Bookman",
+	"Comic Sans MS",
+	"Impact",
+	"Lucida Sans Unicode",
+	"Geneva",
+	"Lucida Console",
 ];
 
 export const SELECT_DEPENDENCIES_TOOLS = [
-	'fill', 'stroke-color', 'stroke-width',
+	'fill', 'stroke-color', 'stroke-width', 'fontFamily'
 ];
 
 export const FILL_COLOR = 'rgba(0, 0, 0, 1)';
@@ -79,6 +77,9 @@ export const STROKE_WIDTH = 2;
 export const RADIUS = 10;
 export const OPACITY = 1;
 export const STROKE_DASH_ARRAY = [];
+export const FONT_WEIGHT: 'normal' | number = 'normal'
+export const FONT_SIZE = 32;
+export const FONT_FAMILY = 'Arial';
 
 export const WIDTH = 100;
 export const HEIGHT = 100;
@@ -114,21 +115,35 @@ export const DIAMOND_OPTION = {
 	stroke_width: STROKE_WIDTH,
 };
 
+export const TEXT_OPTION = {
+	type: 'textbox',
+	fill: FILL_COLOR,
+	angle: 0,
+	fontSize: FONT_SIZE,
+	fontFamily: FONT_FAMILY
+}
+
 export type BuilderEditorProps = {
 	canvas: fabric.Canvas
-	fillColor: string
-	strokeColor: string
-	strokeWidth: number
-	strokeDashArray: number[]
-	radius: number
-	opacity: number
 	selectedObjects: fabric.Object[]
+	fillColor: string
 	setFillColor: (color: string) => void
+	strokeColor: string
 	setStrokeColor: (color: string) => void
+	strokeWidth: number
 	setStrokeWidth: (width: number) => void
+	strokeDashArray: number[]
 	setStrokeDashArray: (dashArray: number[]) => void
+	radius: number
 	setRadius: (radius: number) => void
+	opacity: number
 	setOpacity: (opacity: number) => void
+	fontFamily: string
+	setFontFamily: (fontFamily: string) => void
+	fontWeight: number | 'normal'
+	setFontWeight: (fontWeight: number | 'normal') => void
+	underline: boolean
+	setUnderline: (underline: boolean) => void
 }
 
 export interface UseEditorProps {
@@ -138,7 +153,7 @@ export interface UseEditorProps {
 export type Editor = {
 	canvas: fabric.Canvas,
 	selectedObjects: fabric.Object[]
-	addText: (text: string, options?: fabric.ITextOptions) => void
+	addText: (text: string, options?: fabric.ITextboxOptions) => void
 	addCircle: () => void
 	addSoftRectangle: () => void
 	addTriangle: () => void
@@ -158,4 +173,10 @@ export type Editor = {
 	getActiveRadius: () => number
 	bringForward: () => void
 	sendBackwards: () => void
+	changeFontWeight: (fontWeight: number | 'normal') => void
+	getActiveFontWeight: () => number | 'normal'
+	changeUnderline: (underline: boolean) => void
+	getActiveUnderline: () => boolean
+	changeFontFamily: (fontFamily: string) => void
+	getActiveFontFamily: () => string
 }
