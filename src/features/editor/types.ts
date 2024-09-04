@@ -153,6 +153,7 @@ export interface UseEditorProps {
 export type Editor = {
 	canvas: fabric.Canvas,
 	selectedObjects: fabric.Object[]
+	addImage: (url: string) => void
 	addText: (text: string, options?: fabric.ITextboxOptions) => void
 	addCircle: () => void
 	addSoftRectangle: () => void

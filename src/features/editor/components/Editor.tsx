@@ -2,6 +2,7 @@
 
 
 import { FontFamilySidebar } from '@/features/editor/components/FontFamilySidebar';
+import { ImagesSidebar } from '@/features/editor/components/ImagesSidebar';
 import { OpacitySidebar } from '@/features/editor/components/OpacitySidebar';
 import { StrokeColorSidebar } from '@/features/editor/components/StrokeColorSidebar';
 import { StrokeWidthSidebar } from '@/features/editor/components/StrokeWidthSidebar';
@@ -64,6 +65,7 @@ const Editor = () => {
 				<Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<ShapesSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<TextSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
+				<ImagesSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				{/* top */}
 				<FillColorSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<StrokeColorSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>

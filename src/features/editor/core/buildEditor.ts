@@ -1,4 +1,4 @@
-import FontFaceObserver from 'fontfaceobserver'
+import FontFaceObserver from 'fontfaceobserver';
 import {
 	BuilderEditorProps,
 	CIRCLE_OPTION, DIAMOND_OPTION,
@@ -160,7 +160,7 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 			canvas.renderAll();
 		},
 		changeFontFamily: (value) => {
-			setFontFamily(value)
+			setFontFamily(value);
 			canvas.getActiveObjects().forEach((object) => {
 				if (isTextType(object.type)) {
 					new FontFaceObserver(value)
@@ -172,7 +172,7 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 						})
 						.catch(e => {
 							console.log(e);
-						})
+						});
 				}
 			});
 			canvas.renderAll();
@@ -222,6 +222,16 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 			}
 			// @ts-ignore
 			return selectedObject.get('underline');
+		},
+		// 图片
+		addImage: (url: string) => {
+			fabric.Image.fromURL(url, (img) => {
+				img.scale(0.5)
+					addToCenter(img);
+				},
+				{
+					crossOrigin: 'anonymous',
+				});
 		},
 
 		// 文本
