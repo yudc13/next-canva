@@ -333,6 +333,12 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 				});
 			addToCenter(object);
 		},
+		delete: () => {
+			const objects = canvas.getActiveObjects();
+			canvas.remove(...objects);
+			canvas.discardActiveObject()
+			canvas.renderAll();
+		},
 		canvas,
 		selectedObjects,
 	};

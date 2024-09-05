@@ -180,4 +180,5 @@ export type Editor = {
 	getActiveUnderline: () => boolean
 	changeFontFamily: (fontFamily: string) => void
 	getActiveFontFamily: () => string
+	delete: () => void
 }

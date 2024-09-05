@@ -2,6 +2,7 @@
 
 import { isTextType } from '@/features/editor/utils';
 import { ChevronDown } from 'lucide-react';
+import { MdDelete } from 'react-icons/md';
 import { RxBorderWidth, RxTransparencyGrid } from 'react-icons/rx';
 import { Hint } from '@/components/Hint';
 import { Button } from '@/components/ui/button';
@@ -140,6 +141,11 @@ export const Toolbar = (props: Props) => {
 				<Hint label={'透明度'} side={'bottom'} sideOffset={5}>
 					<Button size={'icon'} variant={'ghost'} onClick={() => onChangeActiveTool('opacity')}>
 						<RxTransparencyGrid className={'size-4'}/>
+					</Button>
+				</Hint>
+				<Hint label={'删除'} side={'bottom'} sideOffset={5}>
+					<Button size={'icon'} variant={'ghost'} onClick={() => editor?.delete()}>
+						<MdDelete className={'size-4'} />
 					</Button>
 				</Hint>
 			</div>
