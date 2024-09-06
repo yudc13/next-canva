@@ -1,3 +1,4 @@
+import { buildControls } from '@/features/editor/core/buildControls';
 import { buildEditor } from '@/features/editor/core/buildEditor';
 import { useAutoResize } from '@/features/editor/hooks/useAutoResize';
 import { useCanvasEvents } from '@/features/editor/hooks/useCanvasEvents';
@@ -70,17 +71,7 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 	const init = useCallback((options: InitProps) => {
 		const {initialCanvas, initialContainer} = options;
 
-		fabric.Object.prototype.set({
-			cornerColor: '#FFF',
-			cornerStyle: 'circle',
-			borderColor: '#3b82f6',
-			borderScaleFactor: 1.5,
-			transparentCorners: false,
-			borderOpacityWhenMoving: 1,
-			cornerStrokeColor: '#3b82f6',
-			hoverCursor: 'pointer',
-			moveCursor: 'move',
-		});
+		buildControls()
 
 		const initialWorkspace = new fabric.Rect({
 			width: 900,
