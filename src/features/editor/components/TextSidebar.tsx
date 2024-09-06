@@ -15,7 +15,7 @@ interface Props {
 export const TextSidebar = (props: Props) => {
 	const {editor, activeTool, onChangeActiveTool} = props;
 	return (
-		<ToolSidebar open={activeTool === 'text'}>
+		<ToolSidebar open={activeTool === 'text'} onClose={() => onChangeActiveTool('select')}>
 			<ToolSidebarHeader title={'文字'} description={'添加默认文字'}/>
 			<ScrollArea>
 				<div className={'p-4 space-y-4'}>
@@ -49,7 +49,6 @@ export const TextSidebar = (props: Props) => {
 					</Button>
 				</div>
 			</ScrollArea>
-			<ToolSidebarClose onClick={() => onChangeActiveTool('select')}/>
 		</ToolSidebar>
 	);
 };

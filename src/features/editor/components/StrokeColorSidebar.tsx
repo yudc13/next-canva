@@ -19,14 +19,13 @@ export const StrokeColorSidebar = (props: Props) => {
 	}
 
 	return (
-		<ToolSidebar open={activeTool === 'stroke-color'}>
+		<ToolSidebar open={activeTool === 'stroke-color'} onClose={() => onChangeActiveTool('select')}>
 			<ToolSidebarHeader title={'边框颜色'} description={'设置元素的边框颜色'} />
 			<ScrollArea>
 				<div className={'gap-4 p-4'}>
 					<ColorPicker value={strokeColor} onChange={onStrokeColorChange} />
 				</div>
 			</ScrollArea>
-			<ToolSidebarClose onClick={() => onChangeActiveTool('select')} />
 		</ToolSidebar>
 	);
 };

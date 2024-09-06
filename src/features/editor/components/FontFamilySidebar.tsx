@@ -24,7 +24,7 @@ export const FontFamilySidebar = (props: Props) => {
 	};
 
 	return (
-		<ToolSidebar open={activeTool === 'fontFamily'}>
+		<ToolSidebar open={activeTool === 'fontFamily'}  onClose={() => onChangeActiveTool('select')}>
 			<ToolSidebarHeader title={'字体'} description={'设置文字字体'}/>
 			<ScrollArea>
 				<div className={'p-4 space-y-4'}>
@@ -47,7 +47,6 @@ export const FontFamilySidebar = (props: Props) => {
 					}
 				</div>
 			</ScrollArea>
-			<ToolSidebarClose onClick={() => onChangeActiveTool('select')}/>
 		</ToolSidebar>
 	);
 };

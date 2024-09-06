@@ -1,4 +1,3 @@
-import FontFaceObserver from 'fontfaceobserver';
 import {
 	BuilderEditorProps,
 	CIRCLE_OPTION, DIAMOND_OPTION,
@@ -163,16 +162,8 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 			setFontFamily(value);
 			canvas.getActiveObjects().forEach((object) => {
 				if (isTextType(object.type)) {
-					new FontFaceObserver(value)
-						.load()
-						.then(() => {
-							console.log('font loaded');
-							// @ts-ignore
-							object.set({fontFamily: value});
-						})
-						.catch(e => {
-							console.log(e);
-						});
+					// @ts-ignore
+					object.set({fontFamily: value});
 				}
 			});
 			canvas.renderAll();

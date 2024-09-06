@@ -23,7 +23,7 @@ export const ImagesSidebar = (props: Props) => {
 	const {data, isLoading, isError} = useImages();
 
 	return (
-		<ToolSidebar open={activeTool === 'images'}>
+		<ToolSidebar open={activeTool === 'images'} onClose={() => onChangeActiveTool('select')}>
 			<ToolSidebarHeader title={'图片'} description={'选择图片素材'}/>
 			{
 				isError && <Error error={'加载图片失败'}/>
@@ -70,7 +70,6 @@ export const ImagesSidebar = (props: Props) => {
 					</div>
 				</ScrollArea>
 			</Loading>
-			<ToolSidebarClose onClick={() => onChangeActiveTool('select')}/>
 		</ToolSidebar>
 	);
 };

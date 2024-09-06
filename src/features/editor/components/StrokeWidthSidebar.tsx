@@ -43,7 +43,7 @@ export const StrokeWidthSidebar = (props: Props) => {
 	};
 
 	return (
-		<ToolSidebar open={activeTool === 'stroke-width'}>
+		<ToolSidebar open={activeTool === 'stroke-width'} onClose={() => onChangeActiveTool('select')}>
 			<ToolSidebarHeader title={'边框样式'} description={'设置元素的边框样式'}/>
 			<ScrollArea>
 				<div className={'space-y-6 p-4'}>
@@ -86,7 +86,6 @@ export const StrokeWidthSidebar = (props: Props) => {
 					</div>
 				</div>
 			</ScrollArea>
-			<ToolSidebarClose onClick={() => onChangeActiveTool('select')}/>
 		</ToolSidebar>
 	);
 };

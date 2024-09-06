@@ -49,8 +49,8 @@ export type ActiveTool =
 export const fonts = [
 	"Arial",
 	"Arial Black",
-	"Verdana",
-	"Helvetica",
+	"华文仿宋",
+	"黑体-简",
 	"Tahoma",
 	"Trebuchet MS",
 	"Times New Roman",

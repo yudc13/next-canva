@@ -1,7 +1,6 @@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ShapeTool } from '@/features/editor/components/ShapeTool';
 import { ToolSidebar } from '@/features/editor/components/ToolSidebar';
-import { ToolSidebarClose } from '@/features/editor/components/ToolSidebarClose';
 import { ToolSidebarHeader } from '@/features/editor/components/ToolSidebarHeader';
 import { ActiveTool, Editor } from '@/features/editor/types';
 import { FaCircle, FaSquare } from 'react-icons/fa';
@@ -17,7 +16,7 @@ interface Props {
 export const ShapesSidebar = (props: Props) => {
 	const {editor, activeTool, onChangeActiveTool} = props;
 	return (
-		<ToolSidebar open={activeTool === 'shapes'}>
+		<ToolSidebar open={activeTool === 'shapes'} onClose={() => onChangeActiveTool('select')}>
 			<ToolSidebarHeader title={'Shapes'} description={'Add shapes to your canvas'} />
 			<ScrollArea>
 				<div className={'grid grid-cols-3 gap-4 p-4'}>
@@ -28,7 +27,6 @@ export const ShapesSidebar = (props: Props) => {
 					<ShapeTool icon={FaDiamond} onClick={() => editor?.addDiamond()} />
 				</div>
 			</ScrollArea>
-			<ToolSidebarClose onClick={() => onChangeActiveTool('select')} />
 		</ToolSidebar>
 	);
 };

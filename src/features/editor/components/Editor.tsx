@@ -7,6 +7,7 @@ import { OpacitySidebar } from '@/features/editor/components/OpacitySidebar';
 import { StrokeColorSidebar } from '@/features/editor/components/StrokeColorSidebar';
 import { StrokeWidthSidebar } from '@/features/editor/components/StrokeWidthSidebar';
 import { TextSidebar } from '@/features/editor/components/TextSidebar';
+import { ToolSidebar } from '@/features/editor/components/ToolSidebar';
 import { ActiveTool, SELECT_DEPENDENCIES_TOOLS } from '@/features/editor/types';
 import { fabric } from 'fabric';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -60,7 +61,7 @@ const Editor = () => {
 	return (
 		<div className="h-full flex flex-col">
 			<Navbar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
-			<div className={'absolute top-[68px] w-full h-[calc(100%-68px)] flex'}>
+			<div className={'absolute top-[68px] w-full h-[calc(100%-68px)] flex z-[50]'}>
 				{/* left */}
 				<Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<ShapesSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>

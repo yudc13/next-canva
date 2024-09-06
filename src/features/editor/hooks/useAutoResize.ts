@@ -30,14 +30,18 @@ export const useAutoResize = (props: AutoResizeProps) => {
 		const zoom = zoomRatio * scale;
 
 		canvas.setViewportTransform(fabric.iMatrix.concat());
+
+		// 等比缩放
 		canvas.zoomToPoint(new fabric.Point(center.left, center.top), zoom);
 
 		if (!localWorkspace) {
 			return;
 		}
 
+
 		const workspaceCenter = localWorkspace.getCenterPoint();
 		const viewportTransform = canvas.viewportTransform;
+
 
 		if (
 			canvas.width === undefined ||
@@ -46,6 +50,12 @@ export const useAutoResize = (props: AutoResizeProps) => {
 		) {
 			return;
 		}
+
+		/**
+		 * viewportTransform
+		 * // [scaleX, skewX, skewY, scaleY, translateX, translateY]
+		 * // [0,      1,     2,     3,      4,          5]
+		 */
 
 		viewportTransform[4] = canvas.width / 2 - workspaceCenter.x * viewportTransform[0];
 		viewportTransform[5] = canvas.height / 2 - workspaceCenter.y * viewportTransform[3];

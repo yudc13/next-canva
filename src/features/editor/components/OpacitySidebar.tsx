@@ -22,7 +22,7 @@ export const OpacitySidebar = (props: Props) => {
 	};
 
 	return (
-		<ToolSidebar open={activeTool === 'opacity'}>
+		<ToolSidebar open={activeTool === 'opacity'} onClose={() => onChangeActiveTool('select')}>
 			<ToolSidebarHeader title={'透明度'} description={'设置元素的透明度'}/>
 			<ScrollArea>
 				<div className={'p-4'}>
@@ -37,7 +37,6 @@ export const OpacitySidebar = (props: Props) => {
 
 				</div>
 			</ScrollArea>
-			<ToolSidebarClose onClick={() => onChangeActiveTool('select')}/>
 		</ToolSidebar>
 	);
 };

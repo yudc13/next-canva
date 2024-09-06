@@ -19,14 +19,13 @@ export const FillColorSidebar = (props: Props) => {
 	}
 
 	return (
-		<ToolSidebar open={activeTool === 'fill'}>
+		<ToolSidebar open={activeTool === 'fill'} onClose={() => onChangeActiveTool('select')}>
 			<ToolSidebarHeader title={'颜色'} description={'设置元素的填充颜色'} />
 			<ScrollArea>
 				<div className={'gap-4 p-4'}>
 					<ColorPicker value={fillColor} onChange={onFillColorChange} />
 				</div>
 			</ScrollArea>
-			<ToolSidebarClose onClick={() => onChangeActiveTool('select')} />
 		</ToolSidebar>
 	);
 };
