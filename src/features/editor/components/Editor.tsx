@@ -1,13 +1,13 @@
 'use client';
 
 
+import { ControlsMenubar } from '@/features/editor/components/ControlsMenubar';
 import { FontFamilySidebar } from '@/features/editor/components/FontFamilySidebar';
 import { ImagesSidebar } from '@/features/editor/components/ImagesSidebar';
 import { OpacitySidebar } from '@/features/editor/components/OpacitySidebar';
 import { StrokeColorSidebar } from '@/features/editor/components/StrokeColorSidebar';
 import { StrokeWidthSidebar } from '@/features/editor/components/StrokeWidthSidebar';
 import { TextSidebar } from '@/features/editor/components/TextSidebar';
-import { ToolSidebar } from '@/features/editor/components/ToolSidebar';
 import { ActiveTool, SELECT_DEPENDENCIES_TOOLS } from '@/features/editor/types';
 import { fabric } from 'fabric';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -83,6 +83,7 @@ const Editor = () => {
 					</div>
 					<Footer/>
 				</main>
+				<ControlsMenubar editor={editor} />
 			</div>
 		</div>
 	);

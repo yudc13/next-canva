@@ -2,6 +2,7 @@ import { buildControls } from '@/features/editor/core/buildControls';
 import { buildEditor } from '@/features/editor/core/buildEditor';
 import { useAutoResize } from '@/features/editor/hooks/useAutoResize';
 import { useCanvasEvents } from '@/features/editor/hooks/useCanvasEvents';
+import { useClipboard } from '@/features/editor/hooks/useClipboard';
 import {
 	FILL_COLOR, FONT_FAMILY,
 	FONT_WEIGHT,
@@ -39,6 +40,7 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 
 	useAutoResize({canvas, container});
 	useCanvasEvents({canvas, setSelectedObjects, clearDependenciesTools});
+	const { copy, paste } = useClipboard({ canvas })
 
 	const editor = useMemo(() => {
 		if (canvas) {
@@ -63,10 +65,12 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 				setFontFamily,
 				setFontWeight,
 				setUnderline,
+				copy,
+				paste
 			});
 		}
 		return undefined;
-	}, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, radius, opacity, fontFamily, fontWeight, underline, selectedObjects]);
+	}, [canvas, selectedObjects, fillColor, strokeColor, strokeWidth, strokeDashArray, radius, opacity, fontFamily, fontWeight, underline, copy, paste]);
 
 	const init = useCallback((options: InitProps) => {
 		const {initialCanvas, initialContainer} = options;

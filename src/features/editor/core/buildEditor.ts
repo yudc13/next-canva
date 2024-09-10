@@ -31,8 +31,12 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 		setFontWeight,
 		setFontFamily,
 		selectedObjects,
+		copy,
+		paste
 	} = props;
 	const getWorkspace = () => canvas.getObjects().find((object) => object.name === WORKSPACE_NAME);
+
+	// 水平垂直居中
 	const center = (object: fabric.Object) => {
 		const workspace = getWorkspace();
 		const center = workspace?.getCenterPoint();
@@ -42,6 +46,29 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 		// @ts-ignore
 		canvas._centerObject(object, center);
 	};
+
+	// 水平居中
+	const centerH = (object: fabric.Object) => {
+		const workspace = getWorkspace();
+		const center = workspace?.getCenterPoint();
+		if (!center) {
+			return
+		}
+		//@ts-ignore
+		canvas._centerObject(object, new fabric.Point(center.x, object.getCenterPoint().y));
+	}
+
+	// 垂直居中
+	const centerV = (object: fabric.Object) => {
+		const workspace = getWorkspace();
+		const center = workspace?.getCenterPoint();
+		if (!center) {
+			return
+		}
+		//@ts-ignore
+		canvas._centerObject(object, new fabric.Point(object.getCenterPoint().x, center.y));
+	}
+
 	const addToCenter = (object: fabric.Object) => {
 		center(object);
 		canvas.add(object);
@@ -329,6 +356,27 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 			canvas.remove(...objects);
 			canvas.discardActiveObject()
 			canvas.renderAll();
+		},
+		copy,
+		paste,
+		clone: () => {
+			copy()
+			paste()
+		},
+		// 居左对齐
+		alignStartVertical: () => {
+			const objects = canvas.getActiveObject();
+			if (objects) {
+				//@ts-ignore
+				objects?.forEachObject(object => {
+					const left = objects.width! / 2 - objects.width!
+					object.set({ left })
+				})
+				canvas.renderAll();
+			}
+		},
+		alignCenterVertical: () => {
+
 		},
 		canvas,
 		selectedObjects,

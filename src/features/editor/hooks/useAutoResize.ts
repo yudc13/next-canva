@@ -1,3 +1,4 @@
+import { useControlsMenubar } from '@/features/editor/hooks/useControlsMenubar';
 import { WORKSPACE_NAME } from '@/features/editor/types';
 import { fabric } from 'fabric';
 import { useCallback, useEffect } from 'react';
@@ -9,6 +10,8 @@ interface AutoResizeProps {
 
 export const useAutoResize = (props: AutoResizeProps) => {
 	const {canvas, container} = props;
+
+	const { showMenubar } = useControlsMenubar({ canvas })
 
 	const autoZoom = useCallback(() => {
 		if (!canvas || !container) {
@@ -74,6 +77,7 @@ export const useAutoResize = (props: AutoResizeProps) => {
 		if (canvas && container) {
 			resizeObserver = new ResizeObserver(() => {
 				autoZoom();
+				showMenubar()
 			});
 			resizeObserver.observe(container);
 		}
@@ -82,7 +86,7 @@ export const useAutoResize = (props: AutoResizeProps) => {
 			resizeObserver?.disconnect();
 		};
 
-	}, [autoZoom, canvas, container]);
+	}, [autoZoom, canvas, container, showMenubar]);
 
 	return {
 		autoZoom,

@@ -144,6 +144,8 @@ export type BuilderEditorProps = {
 	setFontWeight: (fontWeight: number | 'normal') => void
 	underline: boolean
 	setUnderline: (underline: boolean) => void
+	copy: () => void
+	paste: () => void
 }
 
 export interface UseEditorProps {
@@ -181,4 +183,9 @@ export type Editor = {
 	changeFontFamily: (fontFamily: string) => void
 	getActiveFontFamily: () => string
 	delete: () => void
+	clone: () => void
+	copy: () => void
+	paste: () => void
+	alignStartVertical: () => void
+	alignCenterVertical: () => void
 }
