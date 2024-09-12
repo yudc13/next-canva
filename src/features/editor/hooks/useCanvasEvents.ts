@@ -6,10 +6,11 @@ interface Props {
 	canvas: fabric.Canvas | null
 	setSelectedObjects: (objects: fabric.Object[]) => void
 	clearDependenciesTools?: () => void
+	save: () => void
 }
 
 
-export const useCanvasEvents = ({canvas, setSelectedObjects, clearDependenciesTools}: Props) => {
+export const useCanvasEvents = ({canvas, setSelectedObjects, clearDependenciesTools, save}: Props) => {
 	const { showMenubar, hiddenMenubar } = useControlsMenubar({ canvas })
 	useEffect(() => {
 		if (canvas) {
@@ -27,17 +28,24 @@ export const useCanvasEvents = ({canvas, setSelectedObjects, clearDependenciesTo
 				clearDependenciesTools?.()
 				hiddenMenubar()
 			})
-			canvas.on('object:moving', (e) => {
+			canvas.on('object:moving', () => {
 				hiddenMenubar()
 			})
-			canvas.on('object:scaling', (e) => {
+			canvas.on('object:scaling', () => {
 				hiddenMenubar()
 			})
-			canvas.on('object:rotating', (e) => {
+			canvas.on('object:rotating', () => {
 				hiddenMenubar()
 			})
-			canvas.on('object:modified', (e) => {
+			canvas.on('object:modified', () => {
 				showMenubar()
+				save()
+			})
+			canvas.on('object:added', () => {
+				save()
+			})
+			canvas.on('object:removed', () => {
+				save()
 			})
 		}
 		return () => {
@@ -48,7 +56,9 @@ export const useCanvasEvents = ({canvas, setSelectedObjects, clearDependenciesTo
 				canvas.off('object:scaling')
 				canvas.off('object:rotating')
 				canvas.off('object:modified')
+				canvas.off('object:added')
+				canvas.off('object:removed')
 			}
 		}
-	} ,[canvas, clearDependenciesTools, hiddenMenubar, setSelectedObjects, showMenubar])
+	} ,[canvas, clearDependenciesTools, hiddenMenubar, save, setSelectedObjects, showMenubar])
 };

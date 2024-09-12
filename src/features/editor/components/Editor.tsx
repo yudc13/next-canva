@@ -60,8 +60,8 @@ const Editor = () => {
 
 	return (
 		<div className="h-full flex flex-col">
-			<Navbar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
-			<div className={'absolute top-[68px] w-full h-[calc(100%-68px)] flex z-[50]'}>
+			<Navbar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
+			<div className={'absolute top-[68px] w-full h-[calc(100%-68px)] flex'}>
 				{/* left */}
 				<Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
 				<ShapesSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>

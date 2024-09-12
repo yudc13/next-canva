@@ -3,6 +3,7 @@ import { buildEditor } from '@/features/editor/core/buildEditor';
 import { useAutoResize } from '@/features/editor/hooks/useAutoResize';
 import { useCanvasEvents } from '@/features/editor/hooks/useCanvasEvents';
 import { useClipboard } from '@/features/editor/hooks/useClipboard';
+import { useHistory } from '@/features/editor/hooks/useHistory';
 import {
 	FILL_COLOR, FONT_FAMILY,
 	FONT_WEIGHT,
@@ -39,7 +40,8 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 	const [fontFamily, setFontFamily] = useState(FONT_FAMILY);
 
 	const {autoZoom} = useAutoResize({canvas, container});
-	useCanvasEvents({canvas, setSelectedObjects, clearDependenciesTools});
+	const {save, undo, redo, canRedo, canUndo} = useHistory({ canvas })
+	useCanvasEvents({canvas, setSelectedObjects, clearDependenciesTools, save});
 	const {copy, paste} = useClipboard({canvas});
 
 	const editor = useMemo(() => {
@@ -68,10 +70,14 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 				copy,
 				paste,
 				autoZoom,
+				undo,
+				redo,
+				canRedo,
+				canUndo
 			});
 		}
 		return undefined;
-	}, [canvas, selectedObjects, fillColor, strokeColor, strokeWidth, strokeDashArray, radius, opacity, fontFamily, fontWeight, underline, copy, paste, autoZoom]);
+	}, [canvas, selectedObjects, fillColor, strokeColor, strokeWidth, strokeDashArray, radius, opacity, fontFamily, fontWeight, underline, copy, paste, autoZoom, undo, redo, canRedo, canUndo]);
 
 	const init = useCallback((options: InitProps) => {
 		const {initialCanvas, initialContainer} = options;

@@ -33,7 +33,11 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 		selectedObjects,
 		copy,
 		paste,
-		autoZoom
+		autoZoom,
+		undo,
+		redo,
+		canRedo,
+		canUndo
 	} = props;
 	const getWorkspace = () => canvas.getObjects().find((object) => object.name === WORKSPACE_NAME);
 
@@ -398,6 +402,13 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 			)
 		},
 		autoZoom,
+		undo,
+		redo: () => {
+			console.log('redo');
+			redo()
+		},
+		canRedo,
+		canUndo,
 		canvas,
 		selectedObjects,
 	};

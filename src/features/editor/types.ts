@@ -147,6 +147,10 @@ export type BuilderEditorProps = {
 	copy: () => void
 	paste: () => void
 	autoZoom: () => void
+	undo: () => void
+	redo: () => void
+	canUndo: () => boolean
+	canRedo: () => boolean
 }
 
 export interface UseEditorProps {
@@ -194,4 +198,8 @@ export type Editor = {
 	autoZoom: () => void
 	zoomIn: () => void
 	zoomOut: () => void
+	undo: () => void
+	redo: () => void
+	canUndo: () => boolean
+	canRedo: () => boolean
 }

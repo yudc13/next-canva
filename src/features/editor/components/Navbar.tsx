@@ -9,19 +9,20 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import { Logo } from '@/features/editor/components/Logo';
-import { ActiveTool } from '@/features/editor/types';
+import { ActiveTool, Editor } from '@/features/editor/types';
 import { cn } from '@/lib/utils';
 import { ChevronDown, Download, MousePointerClick, Redo2, Undo2 } from 'lucide-react';
 import { BsCloudCheck } from 'react-icons/bs';
 import { CiFileOn } from 'react-icons/ci';
 
 interface Props {
+	editor: Editor | undefined;
 	activeTool: ActiveTool;
 	onChangeActiveTool: (activeTool: ActiveTool) => void;
 }
 
 export const Navbar = (props: Props) => {
-	const {activeTool, onChangeActiveTool} = props
+	const {editor, activeTool, onChangeActiveTool} = props
 	return (
 		<nav className={'w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]'}>
 			<Logo/>
@@ -55,12 +56,12 @@ export const Navbar = (props: Props) => {
 					</Button>
 				</Hint>
 				<Hint label={'撤销'}>
-					<Button size={'icon'} variant={'ghost'}>
+					<Button size={'icon'} variant={'ghost'} disabled={!editor?.canUndo()} onClick={() => editor?.undo()}>
 						<Undo2 className={'size-4'}/>
 					</Button>
 				</Hint>
 				<Hint label={'重做'}>
-					<Button size={'icon'} variant={'ghost'}>
+					<Button size={'icon'} variant={'ghost'} disabled={!editor?.canRedo()} onClick={() => editor?.redo()}>
 						<Redo2 className={'size-4'}/>
 					</Button>
 				</Hint>
