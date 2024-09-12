@@ -4,6 +4,7 @@ import { useAutoResize } from '@/features/editor/hooks/useAutoResize';
 import { useCanvasEvents } from '@/features/editor/hooks/useCanvasEvents';
 import { useClipboard } from '@/features/editor/hooks/useClipboard';
 import { useHistory } from '@/features/editor/hooks/useHistory';
+import { useHotkeys } from '@/features/editor/hooks/useHotkeys';
 import {
 	FILL_COLOR, FONT_FAMILY,
 	FONT_WEIGHT,
@@ -43,6 +44,8 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 	const {save, undo, redo, canRedo, canUndo} = useHistory({ canvas })
 	useCanvasEvents({canvas, setSelectedObjects, clearDependenciesTools, save});
 	const {copy, paste} = useClipboard({canvas});
+
+	useHotkeys({ canvas, copy, paste, save, redo, undo })
 
 	const editor = useMemo(() => {
 		if (canvas) {
