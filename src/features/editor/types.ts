@@ -146,6 +146,7 @@ export type BuilderEditorProps = {
 	setUnderline: (underline: boolean) => void
 	copy: () => void
 	paste: () => void
+	autoZoom: () => void
 }
 
 export interface UseEditorProps {
@@ -188,4 +189,9 @@ export type Editor = {
 	paste: () => void
 	alignStartVertical: () => void
 	alignCenterVertical: () => void
+	changeSize: (size: { width: number, height: number }) => void
+	changeBackgroundColor: (bgColor: string) => void
+	autoZoom: () => void
+	zoomIn: () => void
+	zoomOut: () => void
 }

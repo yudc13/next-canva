@@ -32,7 +32,8 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 		setFontFamily,
 		selectedObjects,
 		copy,
-		paste
+		paste,
+		autoZoom
 	} = props;
 	const getWorkspace = () => canvas.getObjects().find((object) => object.name === WORKSPACE_NAME);
 
@@ -375,9 +376,28 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 				canvas.renderAll();
 			}
 		},
-		alignCenterVertical: () => {
-
+		alignCenterVertical: () => {},
+		changeSize: (size) => {},
+		changeBackgroundColor: (bgColor) => {},
+		zoomIn: () => {
+			let zoomRatio = canvas.getZoom()
+			zoomRatio += 0.05
+			const center = canvas.getCenter()
+			canvas.zoomToPoint(
+				new fabric.Point(center.left, center.top),
+				zoomRatio > 1 ? 1 : zoomRatio
+			)
 		},
+		zoomOut: () => {
+			let zoomRatio = canvas.getZoom()
+			zoomRatio -= 0.05
+			const center = canvas.getCenter()
+			canvas.zoomToPoint(
+				new fabric.Point(center.left, center.top),
+				zoomRatio <= 0.2 ? 0.2 : zoomRatio
+			)
+		},
+		autoZoom,
 		canvas,
 		selectedObjects,
 	};

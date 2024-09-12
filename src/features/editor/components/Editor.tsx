@@ -81,7 +81,7 @@ const Editor = () => {
 					<div className="h-[calc(100%-176)] flex-1 bg-gray-100" ref={containerRef}>
 						<canvas ref={canvasRef}/>
 					</div>
-					<Footer/>
+					<Footer editor={editor}/>
 				</main>
 				<ControlsMenubar editor={editor} />
 			</div>

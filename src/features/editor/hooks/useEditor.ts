@@ -36,11 +36,11 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 	const [opacity, setOpacity] = useState(OPACITY);
 	const [fontWeight, setFontWeight] = useState(FONT_WEIGHT);
 	const [underline, setUnderline] = useState(false);
-	const [fontFamily, setFontFamily] = useState(FONT_FAMILY)
+	const [fontFamily, setFontFamily] = useState(FONT_FAMILY);
 
-	useAutoResize({canvas, container});
+	const {autoZoom} = useAutoResize({canvas, container});
 	useCanvasEvents({canvas, setSelectedObjects, clearDependenciesTools});
-	const { copy, paste } = useClipboard({ canvas })
+	const {copy, paste} = useClipboard({canvas});
 
 	const editor = useMemo(() => {
 		if (canvas) {
@@ -66,16 +66,17 @@ export const useEditor = ({clearDependenciesTools}: UseEditorProps) => {
 				setFontWeight,
 				setUnderline,
 				copy,
-				paste
+				paste,
+				autoZoom,
 			});
 		}
 		return undefined;
-	}, [canvas, selectedObjects, fillColor, strokeColor, strokeWidth, strokeDashArray, radius, opacity, fontFamily, fontWeight, underline, copy, paste]);
+	}, [canvas, selectedObjects, fillColor, strokeColor, strokeWidth, strokeDashArray, radius, opacity, fontFamily, fontWeight, underline, copy, paste, autoZoom]);
 
 	const init = useCallback((options: InitProps) => {
 		const {initialCanvas, initialContainer} = options;
 
-		buildControls()
+		buildControls();
 
 		const initialWorkspace = new fabric.Rect({
 			width: 900,

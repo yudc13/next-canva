@@ -2,7 +2,6 @@ import { Error } from '@/components/Error';
 import { Loading } from '@/components/Loading';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ToolSidebar } from '@/features/editor/components/ToolSidebar';
-import { ToolSidebarClose } from '@/features/editor/components/ToolSidebarClose';
 import { ToolSidebarHeader } from '@/features/editor/components/ToolSidebarHeader';
 import { ActiveTool, Editor } from '@/features/editor/types';
 import { useImages } from '@/features/images/api/useImages';
