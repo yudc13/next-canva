@@ -67,6 +67,17 @@ export const fonts = [
 	"Lucida Console",
 ];
 
+export const JSON_KEYS = [
+	"name",
+	"gradientAngle",
+	"selectable",
+	"hasControls",
+	"linkData",
+	"editable",
+	"extensionType",
+	"extension"
+];
+
 export const SELECT_DEPENDENCIES_TOOLS = [
 	'fill', 'stroke-color', 'stroke-width', 'fontFamily'
 ];
@@ -202,4 +213,9 @@ export type Editor = {
 	redo: () => void
 	canUndo: () => boolean
 	canRedo: () => boolean
+	savePng: () => void
+	saveSvg: () => void
+	saveJpg: () => void
+	saveJson: () => void
+	loadFromJson: (json: string) => void
 }

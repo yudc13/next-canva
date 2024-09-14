@@ -2,11 +2,11 @@ import {
 	BuilderEditorProps,
 	CIRCLE_OPTION, DIAMOND_OPTION,
 	Editor,
-	FONT_WEIGHT, HEIGHT, RECTANGLE_OPTION,
+	FONT_WEIGHT, HEIGHT, JSON_KEYS, RECTANGLE_OPTION,
 	TEXT_OPTION, TRIANGLE_OPTION, WIDTH,
 	WORKSPACE_NAME,
 } from '@/features/editor/types';
-import { isTextType } from '@/features/editor/utils';
+import { downloadFile, isTextType, transformText } from '@/features/editor/utils';
 import { fabric } from 'fabric';
 
 export const buildEditor = (props: BuilderEditorProps): Editor => {
@@ -37,9 +37,65 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 		undo,
 		redo,
 		canRedo,
-		canUndo
+		canUndo,
 	} = props;
 	const getWorkspace = () => canvas.getObjects().find((object) => object.name === WORKSPACE_NAME);
+
+	const generatorSaveOption = () => {
+		const {width, height, left, top} = getWorkspace() as fabric.Rect;
+
+		return {
+			name: 'Image',
+			format: 'png',
+			quality: 1,
+			width,
+			height,
+			left,
+			top,
+		};
+	};
+
+	const savePng = () => {
+		const options = generatorSaveOption();
+		canvas.setViewportTransform([1, 0, 0, 1, 0, 0])
+		const dataUrl = canvas.toDataURL(options)
+
+		downloadFile(dataUrl, 'png')
+		autoZoom()
+	};
+
+	const saveSvg = () => {
+		const options = generatorSaveOption();
+		canvas.setViewportTransform([1, 0, 0, 1, 0, 0])
+		const dataUrl = canvas.toDataURL(options)
+
+		downloadFile(dataUrl, 'svg')
+		autoZoom()
+	};
+
+	const saveJpg = () => {
+		const options = generatorSaveOption();
+		canvas.setViewportTransform([1, 0, 0, 1, 0, 0])
+		const dataUrl = canvas.toDataURL(options)
+
+		downloadFile(dataUrl, 'jpg')
+		autoZoom()
+	};
+
+	const saveJson = async () => {
+		const dataUrl = canvas.toJSON(JSON_KEYS)
+
+		await transformText(dataUrl.objects)
+		const fileString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(dataUrl, null, '\t'))}`
+		downloadFile(fileString, 'json')
+	}
+
+	const loadFromJson = (json: string) => {
+		const data = JSON.parse(json)
+		canvas.loadFromJSON(data, () => {
+			autoZoom()
+		})
+	}
 
 	// 水平垂直居中
 	const center = (object: fabric.Object) => {
@@ -57,22 +113,22 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 		const workspace = getWorkspace();
 		const center = workspace?.getCenterPoint();
 		if (!center) {
-			return
+			return;
 		}
 		//@ts-ignore
 		canvas._centerObject(object, new fabric.Point(center.x, object.getCenterPoint().y));
-	}
+	};
 
 	// 垂直居中
 	const centerV = (object: fabric.Object) => {
 		const workspace = getWorkspace();
 		const center = workspace?.getCenterPoint();
 		if (!center) {
-			return
+			return;
 		}
 		//@ts-ignore
 		canvas._centerObject(object, new fabric.Point(object.getCenterPoint().x, center.y));
-	}
+	};
 
 	const addToCenter = (object: fabric.Object) => {
 		center(object);
@@ -249,7 +305,7 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 		// 图片
 		addImage: (url: string) => {
 			fabric.Image.fromURL(url, (img) => {
-				img.scale(0.5)
+					img.scale(0.5);
 					addToCenter(img);
 				},
 				{
@@ -359,14 +415,14 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 		delete: () => {
 			const objects = canvas.getActiveObjects();
 			canvas.remove(...objects);
-			canvas.discardActiveObject()
+			canvas.discardActiveObject();
 			canvas.renderAll();
 		},
 		copy,
 		paste,
 		clone: () => {
-			copy()
-			paste()
+			copy();
+			paste();
 		},
 		// 居左对齐
 		alignStartVertical: () => {
@@ -374,9 +430,9 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 			if (objects) {
 				//@ts-ignore
 				objects?.forEachObject(object => {
-					const left = objects.width! / 2 - objects.width!
-					object.set({ left })
-				})
+					const left = objects.width! / 2 - objects.width!;
+					object.set({left});
+				});
 				canvas.renderAll();
 			}
 		},
@@ -384,32 +440,37 @@ export const buildEditor = (props: BuilderEditorProps): Editor => {
 		changeSize: (size) => {},
 		changeBackgroundColor: (bgColor) => {},
 		zoomIn: () => {
-			let zoomRatio = canvas.getZoom()
-			zoomRatio += 0.05
-			const center = canvas.getCenter()
+			let zoomRatio = canvas.getZoom();
+			zoomRatio += 0.05;
+			const center = canvas.getCenter();
 			canvas.zoomToPoint(
 				new fabric.Point(center.left, center.top),
-				zoomRatio > 1 ? 1 : zoomRatio
-			)
+				zoomRatio > 1 ? 1 : zoomRatio,
+			);
 		},
 		zoomOut: () => {
-			let zoomRatio = canvas.getZoom()
-			zoomRatio -= 0.05
-			const center = canvas.getCenter()
+			let zoomRatio = canvas.getZoom();
+			zoomRatio -= 0.05;
+			const center = canvas.getCenter();
 			canvas.zoomToPoint(
 				new fabric.Point(center.left, center.top),
-				zoomRatio <= 0.2 ? 0.2 : zoomRatio
-			)
+				zoomRatio <= 0.2 ? 0.2 : zoomRatio,
+			);
 		},
 		autoZoom,
 		undo,
 		redo: () => {
 			console.log('redo');
-			redo()
+			redo();
 		},
 		canRedo,
 		canUndo,
 		canvas,
 		selectedObjects,
+		savePng,
+		saveSvg,
+		saveJpg,
+		saveJson,
+		loadFromJson,
 	};
 };

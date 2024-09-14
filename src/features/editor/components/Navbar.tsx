@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { ChevronDown, Download, MousePointerClick, Redo2, Undo2 } from 'lucide-react';
 import { BsCloudCheck } from 'react-icons/bs';
 import { CiFileOn } from 'react-icons/ci';
+import { useFilePicker } from 'use-file-picker';
 
 interface Props {
 	editor: Editor | undefined;
@@ -22,7 +23,22 @@ interface Props {
 }
 
 export const Navbar = (props: Props) => {
-	const {editor, activeTool, onChangeActiveTool} = props
+	const {editor, activeTool, onChangeActiveTool} = props;
+
+	const {openFilePicker} = useFilePicker({
+		accept: '.json',
+		onFilesSuccessfullySelected: ({plainFiles}: any) => {
+			if (plainFiles && plainFiles.length > 0) {
+				const file = plainFiles[0];
+				const render = new FileReader();
+				render.readAsText(file, 'UTF-8');
+				render.onload = () => {
+					editor?.loadFromJson(render.result as string)
+				}
+			}
+		},
+	});
+
 	return (
 		<nav className={'w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]'}>
 			<Logo/>
@@ -35,7 +51,7 @@ export const Navbar = (props: Props) => {
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align={'start'} className={'min-w-60'}>
-						<DropdownMenuItem className={'flex items-center gap-x-2'}>
+						<DropdownMenuItem className={'flex items-center gap-x-2'} onClick={openFilePicker}>
 							<CiFileOn className={'size-8'}/>
 							<div>
 								<p>选择</p>
@@ -67,7 +83,7 @@ export const Navbar = (props: Props) => {
 				</Hint>
 				<Separator orientation={'vertical'} className={'mx-2'}/>
 				<div className={'flex items-center gap-x-2'}>
-					<BsCloudCheck className={'size-[20px] text-muted-foreground'} />
+					<BsCloudCheck className={'size-[20px] text-muted-foreground'}/>
 					<div className={'text-xs text-muted-foreground'}>保存</div>
 				</div>
 				<div className={'flex items-center gap-x-4 ml-auto'}>
@@ -75,33 +91,33 @@ export const Navbar = (props: Props) => {
 						<DropdownMenuTrigger asChild>
 							<Button variant={'ghost'} size={'sm'}>
 								导出
-								<Download className={'size-4 ml-4'} />
+								<Download className={'size-4 ml-4'}/>
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align={'end'} className={'min-w-60'}>
-							<DropdownMenuItem className={'flex items-center gap-x-2'}>
-								<CiFileOn className={'size-8'} />
+							<DropdownMenuItem className={'flex items-center gap-x-2'} onClick={() => editor?.saveJson()}>
+								<CiFileOn className={'size-8'}/>
 								<div>
 									<p>JSON</p>
 									<p className={'text-xs text-muted-foreground'}>Save for later editing</p>
 								</div>
 							</DropdownMenuItem>
-							<DropdownMenuItem className={'flex items-center gap-x-2'}>
-								<CiFileOn className={'size-8'} />
+							<DropdownMenuItem className={'flex items-center gap-x-2'} onClick={() => editor?.savePng()}>
+								<CiFileOn className={'size-8'}/>
 								<div>
 									<p>PNG</p>
 									<p className={'text-xs text-muted-foreground'}>Best for sharing on the web</p>
 								</div>
 							</DropdownMenuItem>
-							<DropdownMenuItem className={'flex items-center gap-x-2'}>
-								<CiFileOn className={'size-8'} />
+							<DropdownMenuItem className={'flex items-center gap-x-2'} onClick={() => editor?.saveJpg()}>
+								<CiFileOn className={'size-8'}/>
 								<div>
 									<p>JPG</p>
 									<p className={'text-xs text-muted-foreground'}>Best for printing</p>
 								</div>
 							</DropdownMenuItem>
-							<DropdownMenuItem className={'flex items-center gap-x-2'}>
-								<CiFileOn className={'size-8'} />
+							<DropdownMenuItem className={'flex items-center gap-x-2'} onClick={() => editor?.saveSvg()}>
+								<CiFileOn className={'size-8'}/>
 								<div>
 									<p>SVG</p>
 									<p className={'text-xs text-muted-foreground'}>Best for editing in vector software</p>
