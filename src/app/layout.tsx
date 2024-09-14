@@ -1,7 +1,7 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { auth } from '@/auth';
 import { Providers } from '@/components/providers';
+import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
-import { getServerSession } from 'next-auth/next';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 import { SessionProvider } from '@/components/session-provider';
@@ -20,10 +20,10 @@ export default async  function RootLayout({
 }: Readonly<{
 	children: ReactNode;
 }>) {
-	const session = await getServerSession(authOptions);
+	const session = await auth()
 	return (
-		<html lang="en">
-			<body className={inter.className}>
+		<html lang="en" className={'h-full'}>
+			<body className={cn(inter.className, 'h-full')}>
 				<SessionProvider session={session}>
 					<Providers>
 						{children}

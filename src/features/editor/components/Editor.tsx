@@ -1,6 +1,5 @@
 'use client';
 
-
 import { ControlsMenubar } from '@/features/editor/components/ControlsMenubar';
 import { FontFamilySidebar } from '@/features/editor/components/FontFamilySidebar';
 import { ImagesSidebar } from '@/features/editor/components/ImagesSidebar';
